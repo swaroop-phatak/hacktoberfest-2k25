@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+class ListNode {
+public:
+    int val;
+    ListNode* next;
+
+    ListNode(int x) {
+        val = x;
+        next = NULL;
+    }
+};
+
+class LinkedList {
+public:
+    ListNode* head;
+
+    LinkedList() {
+        head = NULL;
+    }
+
+    void insert(int val) {
+        ListNode* newNode = new ListNode(val);
+        if (head == NULL) {
+            head = newNode;
+            return;
+        }
+        ListNode* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+
+    void deleteMiddle() {
+        if (head == NULL || head->next == NULL) {
+            head = NULL;
+            return;
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = NULL;
+
+        while (fast != NULL && fast->next != NULL) {
+            fast = fast->next->next;
+            prev = slow;
+            slow = slow->next;
+        }
+
+        // Delete the middle node
+        prev->next = slow->next;
+        delete slow;
+    }
+
+    void print() {
+        ListNode* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    LinkedList list;
+
+    list.insert(1);
+    list.insert(2);
+    list.insert(3);
+    list.insert(4);
+    list.insert(5);
+
+    cout << "Original Linked List: ";
+    list.print();
+
+    list.deleteMiddle();
+
+    cout << "Linked List after deleting middle node: ";
+    list.print();
+
+    return 0;
+}

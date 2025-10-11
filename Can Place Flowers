@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+    int size = flowerbed.size();
+    int count = 0;
+
+    for (int i = 0; i < size; i++) {
+        // Check if current plot is empty and both neighbors (if any) are empty
+        if (flowerbed[i] == 0 &&
+            (i == 0 || flowerbed[i - 1] == 0) &&
+            (i == size - 1 || flowerbed[i + 1] == 0)) {
+
+            flowerbed[i] = 1; // plant flower here
+            count++;
+
+            if (count >= n)
+                return true;
+        }
+    }
+    return count >= n;
+}
+
+int main() {
+    int n, m;
+    cout << "Enter number of plots: ";
+    cin >> m;
+
+    vector<int> flowerbed(m);
+    cout << "Enter flowerbed (0 = empty, 1 = planted): ";
+    for (int i = 0; i < m; i++)
+        cin >> flowerbed[i];
+
+    cout << "Enter number of new flowers to plant: ";
+    cin >> n;
+
+    if (canPlaceFlowers(flowerbed, n))
+        cout << "Yes, you can plant them 🌸" << endl;
+    else
+        cout << "Nope, not enough space 😞" << endl;
+
+    return 0;
+}

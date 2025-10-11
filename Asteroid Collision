@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+vector<int> asteroidCollision(vector<int>& asteroids) {
+    stack<int> st;
+
+    for (int a : asteroids) {
+        bool destroyed = false;
+        while (!st.empty() && a < 0 && st.top() > 0) {
+            if (st.top() < -a) {
+                st.pop(); // top explodes
+                continue;
+            } else if (st.top() == -a) {
+                st.pop(); // both explode
+            }
+            destroyed = true;
+            break;
+        }
+        if (!destroyed) st.push(a);
+    }
+
+    vector<int> result(st.size());
+    for (int i = st.size() - 1; i >= 0; --i) {
+        result[i] = st.top();
+        st.pop();
+    }
+    return result;
+}
+
+int main() {
+    vector<int> asteroids = {5, 10, -5};
+    vector<int> res = asteroidCollision(asteroids);
+
+    for (int x : res) cout << x << " ";
+    return 0;
+}

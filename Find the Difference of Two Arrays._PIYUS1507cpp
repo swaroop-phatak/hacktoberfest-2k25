@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+
+vector<int> arrayDifference(vector<int>& arr1, vector<int>& arr2) {
+    unordered_set<int> set2(arr2.begin(), arr2.end());  // elements of arr2
+    unordered_set<int> resultSet;                        // to store unique results
+
+    for (int num : arr1) {
+        if (set2.find(num) == set2.end()) { // num not in arr2
+            resultSet.insert(num);
+        }
+    }
+
+    // Convert set to vector
+    vector<int> result(resultSet.begin(), resultSet.end());
+    return result;
+}
+
+int main() {
+    vector<int> arr1 = {1, 2, 3, 4};
+    vector<int> arr2 = {2, 4};
+
+    vector<int> diff = arrayDifference(arr1, arr2);
+
+    cout << "Difference: ";
+    for (int num : diff)
+        cout << num << " ";
+    cout << endl;
+
+    return 0;
+}
